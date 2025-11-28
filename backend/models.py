@@ -1,68 +1,87 @@
+from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
-from flask_login import UserMixin
-from werkzeug.security import generate_password_hash, check_password_hash
-from .extensions import db, login_manager
-from flask import current_app
+import bcrypt
 
+# Initialize SQLAlchemy database instance
+db = SQLAlchemy()
 
-class User(UserMixin, db.Model):
+class User(db.Model):
+    """User model representing registered users and administrators"""
+    __tablename__ = 'user'
+    
     id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(120), unique=True, nullable=False)
-    name = db.Column(db.String(120), nullable=False)
-    password_hash = db.Column(db.String(255), nullable=False)
-    role = db.Column(db.String(20), default="user")  # 'admin' or 'user'
-
-    reservations = db.relationship("Reservation", backref="user", lazy=True)
-
-    def set_password(self, password: str) -> None:
-        self.password_hash = generate_password_hash(password)
-
-    def check_password(self, password: str) -> bool:
-        return check_password_hash(self.password_hash, password)
-
-
-@login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(int(user_id))
-
+    username = db.Column(db.String(50), unique=True, nullable=False)
+    email = db.Column(db.String(100), nullable=False)
+    phone_number = db.Column(db.String(15), nullable=True)
+    address = db.Column(db.String(200), nullable=True)
+    pincode = db.Column(db.String(10), nullable=True)
+    password = db.Column(db.String(100), nullable=False)  # Stored as bcrypt hash
+    role = db.Column(db.String(10), default='user')  # 'user' or 'admin'
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    last_visit = db.Column(db.DateTime, default=datetime.utcnow)
+    
+    def set_password(self, password):
+        """Hash and store user password using bcrypt"""
+        self.password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+    
+    def check_password(self, password):
+        """Verify provided password against stored hash"""
+        return bcrypt.checkpw(password.encode('utf-8'), self.password.encode('utf-8'))
+    
+    def to_dict(self):
+        """Convert user object to dictionary for JSON serialization"""
+        return {
+            'id': self.id,
+            'username': self.username,
+            'email': self.email,
+            'phone_number': self.phone_number,
+            'address': self.address,
+            'pincode': self.pincode,
+            'role': self.role,
+            'created_at': self.created_at.isoformat() if self.created_at else None,
+            'last_visit': self.last_visit.isoformat() if self.last_visit else None
+        }
+    
+    def __repr__(self):
+        return f'<User {self.username}>'
 
 class ParkingLot(db.Model):
+    """ParkingLot model representing parking facilities"""
+    __tablename__ = 'parking_lot'
+    
     id = db.Column(db.Integer, primary_key=True)
-    prime_location_name = db.Column(db.String(120), nullable=False)
-    address = db.Column(db.String(255), nullable=False)
-    pin_code = db.Column(db.String(20), nullable=False)
-    price = db.Column(db.Integer, nullable=False)
+    prime_location_name = db.Column(db.String(100), nullable=False)
+    address = db.Column(db.String(200), nullable=False)
+    pin_code = db.Column(db.String(10), nullable=False)
+    price_per_hour = db.Column(db.Float, default=10.0)  # Hourly rate in rupees
     number_of_spots = db.Column(db.Integer, nullable=False)
-
-    spots = db.relationship("ParkingSpot", backref="lot", lazy=True, cascade="all, delete-orphan")
-
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    
+    def __repr__(self):
+        return f'<ParkingLot {self.prime_location_name}>'
 
 class ParkingSpot(db.Model):
+    """ParkingSpot model representing individual parking spaces"""
+    __tablename__ = 'parking_spot'
+    
     id = db.Column(db.Integer, primary_key=True)
-    lot_id = db.Column(db.Integer, db.ForeignKey("parking_lot.id"), nullable=False)
-    status = db.Column(db.String(1), default="A")  # A=available, O=occupied
-
-    reservations = db.relationship("Reservation", backref="spot", lazy=True)
-
+    lot_id = db.Column(db.Integer, db.ForeignKey('parking_lot.id'), nullable=False)
+    spot_number = db.Column(db.String(10))  # Spot identifier (e.g., "A1", "A2")
+    status = db.Column(db.String(1), default='A')  # 'A' = Available, 'O' = Occupied
+    
+    def __repr__(self):
+        return f'<Spot {self.spot_number}>'
 
 class Reservation(db.Model):
+    """Reservation model tracking parking sessions"""
+    __tablename__ = 'reservation'
+    
     id = db.Column(db.Integer, primary_key=True)
-    spot_id = db.Column(db.Integer, db.ForeignKey("parking_spot.id"), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
-    parking_timestamp = db.Column(db.DateTime, default=datetime.utcnow)
-    leaving_timestamp = db.Column(db.DateTime, nullable=True)
-    parking_cost = db.Column(db.Integer, default=0)
-
-
-def ensure_default_admin():
-    email = current_app.config["SECURITY_ADMIN_EMAIL"]
-    password = current_app.config["SECURITY_ADMIN_PASSWORD"]
-    admin = User.query.filter_by(email=email).first()
-    if not admin:
-        admin = User(email=email, name="Admin", role="admin")
-        admin.set_password(password)
-        db.session.add(admin)
-        db.session.commit()
-
-
-
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    spot_id = db.Column(db.Integer, db.ForeignKey('parking_spot.id'), nullable=False)
+    parking_timestamp = db.Column(db.DateTime, default=datetime.utcnow)  # Session start time
+    leaving_timestamp = db.Column(db.DateTime)  # Session end time (null if active)
+    parking_cost = db.Column(db.Float, default=0.0)  # Calculated total cost
+    
+    def __repr__(self):
+        return f'<Reservation {self.id}>'
