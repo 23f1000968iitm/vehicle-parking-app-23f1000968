@@ -1,0 +1,44 @@
+Reservation ID,User Name,User Email,Parking Lot Name,Parking Lot Address,Parking Lot Pincode,Spot Number,Parking Start Time (UTC),Parking End Time (UTC),Duration (Hours),Parking Cost (₹),Reservation Status,Price Per Hour (₹)
+30,user2,user2@example.com,Downtown Mall Parking,"123 Main Street, Downtown",400001,A6,2025-11-28 08:37:04.940065,N/A,N/A,₹0.00,Active,₹25.00
+18,user2,user2@example.com,Downtown Mall Parking,"123 Main Street, Downtown",400001,A4,2025-11-28 08:37:04.658436,N/A,N/A,₹0.00,Active,₹25.00
+6,user2,user2@example.com,Downtown Mall Parking,"123 Main Street, Downtown",400001,A2,2025-11-28 08:37:04.348668,N/A,N/A,₹0.00,Active,₹25.00
+27,user1,user1@example.com,Downtown Mall Parking,"123 Main Street, Downtown",400001,A5,2025-11-28 06:37:04.938460,N/A,N/A,₹0.00,Active,₹25.00
+15,user1,user1@example.com,Downtown Mall Parking,"123 Main Street, Downtown",400001,A3,2025-11-28 06:37:04.656817,N/A,N/A,₹0.00,Active,₹25.00
+3,user1,user1@example.com,Downtown Mall Parking,"123 Main Street, Downtown",400001,A1,2025-11-28 06:37:04.347486,N/A,N/A,₹0.00,Active,₹25.00
+29,user2,user2@example.com,Downtown Mall Parking,"123 Main Street, Downtown",400001,A9,2025-11-26 08:37:04.940040,2025-11-26 10:37:04.940040,2.0,₹50.00,Completed,₹25.00
+17,user2,user2@example.com,Downtown Mall Parking,"123 Main Street, Downtown",400001,A9,2025-11-26 08:37:04.658411,2025-11-26 10:37:04.658411,2.0,₹50.00,Completed,₹25.00
+5,user2,user2@example.com,Downtown Mall Parking,"123 Main Street, Downtown",400001,A9,2025-11-26 08:37:04.348644,2025-11-26 10:37:04.348644,2.0,₹50.00,Completed,₹25.00
+25,user1,user1@example.com,Cultural Center Parking,77 Heritage Square,400005,C8,2025-11-25 08:37:04.938028,2025-11-25 11:37:04.938028,3.0,₹54.00,Completed,₹18.00
+13,user1,user1@example.com,Cultural Center Parking,77 Heritage Square,400005,C8,2025-11-25 08:37:04.656389,2025-11-25 11:37:04.656389,3.0,₹54.00,Completed,₹18.00
+1,user1,user1@example.com,Cultural Center Parking,77 Heritage Square,400005,C8,2025-11-25 08:37:04.347074,2025-11-25 11:37:04.347074,3.0,₹54.00,Completed,₹18.00
+28,user2,user2@example.com,Cultural Center Parking,77 Heritage Square,400005,A4,2025-11-25 04:37:04.938478,2025-11-25 08:37:04.938478,4.0,₹72.00,Completed,₹18.00
+16,user2,user2@example.com,Cultural Center Parking,77 Heritage Square,400005,A4,2025-11-25 04:37:04.656836,2025-11-25 08:37:04.656836,4.0,₹72.00,Completed,₹18.00
+4,user2,user2@example.com,Cultural Center Parking,77 Heritage Square,400005,A4,2025-11-25 04:37:04.347502,2025-11-25 08:37:04.347502,4.0,₹72.00,Completed,₹18.00
+26,user1,user1@example.com,Seaside Business Hub,"48 Marina Road, Harbour District",400002,C7,2025-11-23 07:37:04.938428,2025-11-23 08:37:04.938428,1.0,₹30.00,Completed,₹30.00
+14,user1,user1@example.com,Seaside Business Hub,"48 Marina Road, Harbour District",400002,C7,2025-11-23 07:37:04.656784,2025-11-23 08:37:04.656784,1.0,₹30.00,Completed,₹30.00
+2,user1,user1@example.com,Seaside Business Hub,"48 Marina Road, Harbour District",400002,C7,2025-11-23 07:37:04.347460,2025-11-23 08:37:04.347460,1.0,₹30.00,Completed,₹30.00
+33,user4,user4@example.com,Airport Express Parking,"Terminal 2, Departures Lane",400004,B2,2025-11-23 05:37:04.940508,2025-11-23 10:37:04.940508,5.0,₹225.00,Completed,₹45.00
+21,user4,user4@example.com,Airport Express Parking,"Terminal 2, Departures Lane",400004,B2,2025-11-23 05:37:04.658885,2025-11-23 10:37:04.658885,5.0,₹225.00,Completed,₹45.00
+9,user4,user4@example.com,Airport Express Parking,"Terminal 2, Departures Lane",400004,B2,2025-11-23 05:37:04.349082,2025-11-23 10:37:04.349082,5.0,₹225.00,Completed,₹45.00
+35,user5,user5@example.com,Airport Express Parking,"Terminal 2, Departures Lane",400004,B3,2025-11-21 06:37:04.940817,2025-11-21 08:37:04.940817,2.0,₹90.00,Completed,₹45.00
+23,user5,user5@example.com,Airport Express Parking,"Terminal 2, Departures Lane",400004,B3,2025-11-21 06:37:04.659194,2025-11-21 08:37:04.659194,2.0,₹90.00,Completed,₹45.00
+11,user5,user5@example.com,Airport Express Parking,"Terminal 2, Departures Lane",400004,B3,2025-11-21 06:37:04.349372,2025-11-21 08:37:04.349372,2.0,₹90.00,Completed,₹45.00
+31,user3,user3@example.com,Airport Express Parking,"Terminal 2, Departures Lane",400004,D4,2025-11-17 08:37:04.940081,2025-11-17 13:37:04.940081,5.0,₹225.00,Completed,₹45.00
+19,user3,user3@example.com,Airport Express Parking,"Terminal 2, Departures Lane",400004,D4,2025-11-17 08:37:04.658453,2025-11-17 13:37:04.658453,5.0,₹225.00,Completed,₹45.00
+7,user3,user3@example.com,Airport Express Parking,"Terminal 2, Departures Lane",400004,D4,2025-11-17 08:37:04.348683,2025-11-17 13:37:04.348683,5.0,₹225.00,Completed,₹45.00
+32,user3,user3@example.com,Seaside Business Hub,"48 Marina Road, Harbour District",400002,B5,2025-11-15 03:37:04.940489,2025-11-15 08:37:04.940489,5.0,₹150.00,Completed,₹30.00
+20,user3,user3@example.com,Seaside Business Hub,"48 Marina Road, Harbour District",400002,B5,2025-11-15 03:37:04.658867,2025-11-15 08:37:04.658867,5.0,₹150.00,Completed,₹30.00
+8,user3,user3@example.com,Seaside Business Hub,"48 Marina Road, Harbour District",400002,B5,2025-11-15 03:37:04.349064,2025-11-15 08:37:04.349064,5.0,₹150.00,Completed,₹30.00
+34,user4,user4@example.com,Tech Park Annex,"901 Innovation Drive, IT Corridor",400003,A8,2025-11-14 08:37:04.940799,2025-11-14 10:37:04.940799,2.0,₹70.00,Completed,₹35.00
+22,user4,user4@example.com,Tech Park Annex,"901 Innovation Drive, IT Corridor",400003,A8,2025-11-14 08:37:04.659176,2025-11-14 10:37:04.659176,2.0,₹70.00,Completed,₹35.00
+10,user4,user4@example.com,Tech Park Annex,"901 Innovation Drive, IT Corridor",400003,A8,2025-11-14 08:37:04.349355,2025-11-14 10:37:04.349355,2.0,₹70.00,Completed,₹35.00
+36,user5,user5@example.com,Seaside Business Hub,"48 Marina Road, Harbour District",400002,B10,2025-11-14 06:37:04.941086,2025-11-14 07:37:04.941086,1.0,₹30.00,Completed,₹30.00
+24,user5,user5@example.com,Seaside Business Hub,"48 Marina Road, Harbour District",400002,B10,2025-11-14 06:37:04.659467,2025-11-14 07:37:04.659467,1.0,₹30.00,Completed,₹30.00
+12,user5,user5@example.com,Seaside Business Hub,"48 Marina Road, Harbour District",400002,B10,2025-11-14 06:37:04.349631,2025-11-14 07:37:04.349631,1.0,₹30.00,Completed,₹30.00
+
+SUMMARY STATISTICS
+Total Reservations,36
+Completed Reservations,30
+Active Reservations,6
+Total Revenue,₹2988.00
+Report Generated,2025-11-28 09:38:06 UTC
