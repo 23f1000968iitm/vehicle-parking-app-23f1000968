@@ -1,109 +1,40 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Vehicle Parking App</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <script src="https://unpkg.com/vue@3"></script>
-  </head>
-  <body class="bg-light">
-    <div id="app" class="container py-4">
-      <h2 class="mb-3">Vehicle Parking App</h2>
-      <div v-if="!me.authenticated && !me.name" class="row g-3">
-        <div class="col-md-6">
-          <div class="card"><div class="card-body">
-            <h5>Login</h5>
-            <input v-model="login.email" class="form-control mb-2" placeholder="Email" />
-            <input v-model="login.password" class="form-control mb-2" placeholder="Password" type="password" />
-            <button class="btn btn-primary" @click="doLogin">Login</button>
-            <div class="text-danger mt-2">{{ error }}</div>
-          </div></div>
-        </div>
-        <div class="col-md-6">
-          <div class="card"><div class="card-body">
-            <h5>Register</h5>
-            <input v-model="register.name" class="form-control mb-2" placeholder="Full name" />
-            <input v-model="register.email" class="form-control mb-2" placeholder="Email" />
-            <input v-model="register.password" class="form-control mb-2" placeholder="Password" type="password" />
-            <button class="btn btn-success" @click="doRegister">Register</button>
-          </div></div>
-        </div>
-      </div>
+<html lang="">
 
-      <div v-else>
-        <div class="d-flex justify-content-between align-items-center mb-3">
-          <div>Welcome, <b>{{ me.name }}</b> ({{ me.role }})</div>
-          <button class="btn btn-outline-secondary btn-sm" @click="logout">Logout</button>
-        </div>
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ParkIndia - Intelligent Parking Manager</title>
 
-        <div v-if="me.role==='admin'">
-          <div class="card mb-3"><div class="card-body">
-            <h5>Create Parking Lot</h5>
-            <div class="row g-2">
-              <div class="col"><input v-model="lotForm.prime_location_name" placeholder="Location" class="form-control" /></div>
-              <div class="col"><input v-model="lotForm.address" placeholder="Address" class="form-control" /></div>
-              <div class="col"><input v-model="lotForm.pin_code" placeholder="Pin code" class="form-control" /></div>
-              <div class="col"><input v-model.number="lotForm.price" placeholder="Price" class="form-control" type="number" /></div>
-              <div class="col"><input v-model.number="lotForm.number_of_spots" placeholder="Spots" class="form-control" type="number" /></div>
-              <div class="col"><button class="btn btn-primary w-100" @click="createLot">Add</button></div>
-            </div>
-          </div></div>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-          <div class="card"><div class="card-body">
-            <h5>Lots</h5>
-            <table class="table table-sm">
-              <thead><tr><th>Name</th><th>Address</th><th>Pin</th><th>Price</th><th>Spots</th><th>Occupied</th><th></th></tr></thead>
-              <tbody>
-                <tr v-for="l in lots" :key="l.id">
-                  <td>{{ l.prime_location_name }}</td><td>{{ l.address }}</td><td>{{ l.pin_code }}</td>
-                  <td>{{ l.price }}</td><td>{{ l.number_of_spots }}</td><td>{{ l.occupied }}</td>
-                  <td><button class="btn btn-danger btn-sm" @click="deleteLot(l.id)">Delete</button></td>
-                </tr>
-              </tbody>
-            </table>
-          </div></div>
-        </div>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap"
+    rel="stylesheet">
 
-        <div v-else>
-          <div class="card mb-3"><div class="card-body">
-            <h5>Available Parking Lots</h5>
-            <div class="row row-cols-1 row-cols-md-2 g-3">
-              <div class="col" v-for="l in lots" :key="l.id">
-                <div class="card h-100"><div class="card-body">
-                  <h6>{{ l.name }}</h6>
-                  <div>Price: ₹{{ l.price }}</div>
-                  <div>Available: {{ l.available }}/{{ l.total }}</div>
-                  <button class="btn btn-primary btn-sm mt-2" :disabled="!l.available" @click="book(l.id)">Book</button>
-                </div></div>
-              </div>
-            </div>
-          </div></div>
-
-          <div class="card"><div class="card-body">
-            <h5>My Reservations</h5>
-            <table class="table table-sm">
-              <thead><tr><th>ID</th><th>Lot</th><th>Spot</th><th>From</th><th>To</th><th>Cost</th><th></th></tr></thead>
-              <tbody>
-                <tr v-for="r in history" :key="r.id">
-                  <td>{{ r.id }}</td><td>{{ r.lot }}</td><td>{{ r.spot_id }}</td>
-                  <td>{{ r.from }}</td><td>{{ r.to || '-' }}</td><td>{{ r.cost }}</td>
-                  <td>
-                    <button class="btn btn-success btn-sm" v-if="!r.to" @click="release(r.id)">Release</button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <button class="btn btn-outline-primary btn-sm" @click="exportCsv">Export CSV</button>
-          </div></div>
-        </div>
-      </div>
-    </div>
-
-    <script src="/assets/api.js"></script>
-    <script src="/assets/app.js"></script>
-  </body>
-  </html>
+  <style>
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+  </style>
+</head>
 
 
+<body>
+  <div id="app"></div>
+  <script type="module" src="/src/main.js"></script>
+  
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 
+</html>
